@@ -1,0 +1,181 @@
+<div class="main-container">
+  <audio #bgMusic loop src="assets/song.mp3"></audio>
+  <audio #voiceMsg src="assets/voice.mp3"></audio> <!-- User can replace this with a real voice msg -->
+
+  <!-- Global Controls -->
+  <div class="global-controls" *ngIf="currentStep() > 1">
+    <button class="control-btn" (click)="toggleMusic()">
+      {{ isMusicPlaying() ? '🔊 Music On' : '🔇 Music Off' }}
+    </button>
+    <button class="control-btn" (click)="toggleVoice()">
+      {{ isVoicePlaying() ? '🎙️ Voice Playing' : '🎙️ Play Voice' }}
+    </button>
+  </div>
+
+  <!-- Easter Egg Overlay -->
+  <div class="easter-egg-overlay" *ngIf="showEasterEgg()" (click)="showEasterEgg.set(false)">
+    <div class="easter-egg-card">
+      <p>{{ easterEggContent() }}</p>
+    </div>
+  </div>
+
+  <!-- Hidden Easter Egg Trigger -->
+  <div class="secret-trigger" (click)="triggerEasterEgg('You found a secret heart! I love you so much Asmaa! ❤️')">❤️</div>
+
+  <!-- Step 0: Password Gate -->
+  <section *ngIf="currentStep() === 0" class="password-screen step-container">
+    <div class="password-box">
+      <h2>Something special awaits...</h2>
+      <p>Enter the secret word to enter</p>
+      <input type="password" [(ngModel)]="password" (keyup.enter)="checkPassword()" placeholder="The secret word...">
+      <button class="romantic-btn" (click)="checkPassword()">Unlock the Magic ✨</button>
+      <p class="error-msg" *ngIf="isPasswordError()">Incorrect, try again my love ❤️</p>
+    </div>
+  </section>
+
+  <!-- Step 1: Cinematic Intro -->
+  <section *ngIf="currentStep() === 1" class="intro-screen step-container">
+    <div class="intro-content">
+      <h1 class="fading-text">{{ introMessages[currentIntroMsg()] }}</h1>
+    </div>
+  </section>
+
+  <!-- Step 2: Welcome Screen -->
+  <section *ngIf="currentStep() === 2" class="welcome-screen step-container">
+    <div class="overlay"></div>
+    <div class="content">
+      <h1 class="typing-container">
+        <span #typingElement></span>
+      </h1>
+      <p class="subtitle">A journey through our story, just for you.</p>
+      
+      <div class="love-meter-container">
+        <p>Your Love Meter: {{ loveLevel() }}%</p>
+        <div class="meter-bg">
+          <div class="meter-fill" [style.width.%]="loveLevel()"></div>
+        </div>
+        <button class="heart-btn heart-meter" (click)="increaseLove()">❤️ Give Love</button>
+      </div>
+
+      <button class="romantic-btn start-btn" (click)="nextStep()">Start the Surprise 🎁</button>
+    </div>
+    <div class="floating-hearts">
+      <span class="heart" *ngFor="let h of [1,2,3,4,5]">❤️</span>
+    </div>
+  </section>
+
+  <!-- Step 3: Memory Timeline -->
+  <section *ngIf="currentStep() === 3" class="timeline-section step-container">
+    <h2 class="section-title">The Story of Us</h2>
+    <div class="timeline">
+      <div *ngFor="let memory of memories; let i = index" class="timeline-item" [ngClass]="{'left': i % 2 === 0, 'right': i % 2 !== 0}">
+        <div class="timeline-content">
+          <div class="image-wrapper">
+            <img [src]="memory.img" [alt]="memory.title">
+          </div>
+          <h3>{{ memory.title }}</h3>
+          <p>{{ memory.description }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="nav-btns">
+      <button class="romantic-btn" (click)="prevStep()">Back</button>
+      <button class="romantic-btn" (click)="nextStep()">Map of Memories 📍</button>
+    </div>
+  </section>
+
+  <!-- Step 4: Memory Map -->
+  <section *ngIf="currentStep() === 4" class="map-section step-container">
+    <h2 class="section-title">Where Our Love Grew</h2>
+    <div class="map-container">
+      <div class="custom-map">
+        <div *ngFor="let memory of memories" class="map-pin" [style.top]="memory.lat" [style.left]="memory.lng">
+          <div class="pin-head">📍</div>
+          <div class="pin-popup">
+            <img [src]="memory.img">
+            <p>{{ memory.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-btns">
+      <button class="romantic-btn" (click)="prevStep()">Back</button>
+      <button class="romantic-btn" (click)="nextStep()">Love Quiz 🎮</button>
+    </div>
+  </section>
+
+  <!-- Step 5: Love Quiz -->
+  <section *ngIf="currentStep() === 5" class="quiz-section step-container">
+    <h2 class="section-title">How well do you know us?</h2>
+    <div class="quiz-box">
+      <p class="score">Score: {{ quizScore() }} / {{ quizQuestions.length }}</p>
+      <div class="question-container">
+        <h3>{{ quizQuestions[quizStep()].q }}</h3>
+        <div class="options">
+          <button *ngFor="let option of quizQuestions[quizStep()].a; let i = index" 
+                  (click)="answerQuiz(i)" class="option-btn">
+            {{ option }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 6: Mini-Game Gift -->
+  <section *ngIf="currentStep() === 6" class="gift-section step-container">
+    <h2 class="section-title">A Special Gift for You</h2>
+    <div class="gift-box-container" (click)="openGift()" [ngClass]="{'opened': isGiftOpened()}">
+      <div class="gift-box">
+        <div class="lid"></div>
+        <div class="box"></div>
+      </div>
+      <div class="gift-message" *ngIf="isGiftOpened()">
+        <h3>You are my greatest adventure!</h3>
+        <p>Keep your eyes on the screen...</p>
+      </div>
+    </div>
+    <button *ngIf="isGiftOpened()" class="romantic-btn next-btn" (click)="nextStep()">Final Surprise ✨</button>
+  </section>
+
+  <!-- Step 7: Final Celebration -->
+  <section *ngIf="currentStep() === 7" class="final-section step-container">
+    <div class="celebration-content">
+      <div class="cake-container">
+        <div class="cake">
+          <div class="plate"></div>
+          <div class="layer layer-bottom"></div>
+          <div class="layer layer-middle"></div>
+          <div class="layer layer-top"></div>
+          <div class="candle">
+            <div class="flame"></div>
+          </div>
+        </div>
+      </div>
+      <div class="final-message">
+        <h2>Happy Birthday, Asmaa!</h2>
+        <div #finalMessageElement class="typed-letter"></div>
+      </div>
+    </div>
+    <button class="romantic-btn next-btn" (click)="nextStep()">Our Polaroid Wall 📸</button>
+  </section>
+
+  <!-- Step 8: Polaroid Photo Wall -->
+  <section *ngIf="currentStep() === 8" class="gallery-section step-container">
+    <h2 class="section-title">Captured in Time</h2>
+    <div class="polaroid-wall">
+      <div *ngFor="let img of galleryImages" class="polaroid">
+        <div class="photo-frame">
+          <img [src]="img" alt="Gallery Image">
+        </div>
+        <div class="caption">Memory ✨</div>
+      </div>
+    </div>
+    <div class="footer-msg">
+      <p>I love you to the moon and back! ❤️</p>
+      <div class="final-actions">
+        <button class="romantic-btn" (click)="currentStep.set(2)">Back to Start</button>
+        <button class="romantic-btn secondary" (click)="triggerEasterEgg('Surprise! There is another gift waiting for you in IRL! 🎁')">A Secret? 🤔</button>
+      </div>
+    </div>
+  </section>
+</div>

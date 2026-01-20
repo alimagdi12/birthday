@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+:root {
+  --primary-romantic: #FF6F91;
+  --accent-warm: #D7A1E0;
+  --text-dark: #2D2D2D;
+  --bg-light: #FFF8F5;
+  --gold: #F0D55E;
+  
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+}
+
+.romantic-btn {
+  background: var(--primary-romantic);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 111, 145, 0.4);
+    background: darken(#FF6F91, 5%);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
