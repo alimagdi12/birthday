@@ -29,7 +29,7 @@ export class AppComponent implements AfterViewInit {
   // Password Logic
   password = signal('');
   isPasswordError = signal(false);
-  correctPassword = 'asmaa'; // The special word
+  correctPassword = 'salma'; // The special word
 
   // Intro Logic
   introMessages = ['Wait a second...', 'Someone special has a birthday today...', 'Are you ready?'];
@@ -39,31 +39,39 @@ export class AppComponent implements AfterViewInit {
   quizScore = signal(0);
   quizStep = signal(0);
   quizQuestions = [
-    { q: 'When was our first date?', a: ['13/5', '15/6', '20/2'], correct: 0 },
+    { q: 'When was our first date?', a: ['18/6', '15/6', '20/2'], correct: 0 },
     { q: 'What is my favorite thing about you?', a: ['Your smile', 'Your kindness', 'Everything'], correct: 2 },
-    { q: 'When is our anniversary?', a: ['12/1', '21/11', '10/9'], correct: 1 }
+    { q: 'When is our anniversary?', a: ['12/1', '25/07', '10/9'], correct: 1 }
   ];
 
   // Love Meter
   loveLevel = signal(0);
 
-  // Memories & Gallery
   memories = [
-    { title: 'The Moment We Met', description: 'Everything changed the second I saw you.', img: 'assets/images/WhatsApp Image 2026-01-20 at 8.01.35 PM.jpeg', lat: '10%', lng: '20%' },
-    { title: 'Our First Date', description: 'I was so nervous, but you made it perfect.', img: 'assets/images/WhatsApp Image 2026-01-20 at 8.01.36 PM.jpeg', lat: '30%', lng: '45%' },
-    { title: 'Your Beautiful Smile', description: 'It lights up my darkest days.', img: 'assets/images/WhatsApp Image 2026-01-20 at 8.01.36 PM1.jpeg', lat: '60%', lng: '30%' },
-    { title: 'Always Together', description: 'Through thick and thin, you are my rock.', img: 'assets/images/WhatsApp Image 2026-01-20 at 8.06.16 PM.jpeg', lat: '80%', lng: '70%' },
+    { title: 'The Moment We Met', description: 'Everything changed the second I saw you.', img: 'assets/images/WhatsApp Image 2026-05-18 at 2.00.25 PM1.jpeg', lat: '10%', lng: '20%' },
+    { title: 'Our First Date', description: 'I was so nervous, but you made it perfect.', img: 'assets/images/WhatsApp Image 2026-05-18 at 2.00.27 PM2.jpeg', lat: '30%', lng: '45%' },
+    { title: 'Your Beautiful Smile', description: 'It lights up my darkest days.', img: 'assets/images/WhatsApp Image 2026-05-18 at 2.00.28 PM3.jpeg', lat: '60%', lng: '30%' },
+    { title: 'Always Together', description: 'Through thick and thin, you are my rock.', img: 'assets/images/WhatsApp Image 2026-05-18 at 2.00.29 PM4.jpeg', lat: '80%', lng: '70%' },
   ];
 
+  favoriteSpot = {
+    title: "Our Cozy Corner: Kicker's Cafe ☕✨",
+    description: "Located right next to Lutfi Shabarh Mosque on 23 July Street, this is our special haven. Every coffee shared here, every beautiful laugh, and every sweet hour we spend talking makes this the most romantic spot in Port Said.",
+    img: 'assets/images/kickers.png',
+    mapLink: 'https://maps.google.com?q=Kicker%E2%80%99s,%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D9%85%D8%B3%D8%AC%D8%AF%20%D9%84%D8%B7%D9%81%D9%8A%20%D8%B4%D8%A8%D8%A7%D8%B1%D8%A9,%20%D8%B4%D8%A7%D8%B1%D8%B9%2023%20%D9%8A%D9%88%D9%84%D9%8A%D9%88,%20El%20Sharq,%20Port%20Said%20Governorate%208574110&ftid=0x14f99da62d7097ef:0x40b30c88d4ba3289&entry=gps&shh=CAE&g_st=iw',
+    lat: '48%',
+    lng: '55%'
+  };
+
   galleryImages = [
-    'assets/images/WhatsApp Image 2026-01-20 at 8.01.36 PMa.jpeg',
-    'assets/images/WhatsApp Image 2026-01-20 at 8.06.16 PMq.jpeg',
-    'assets/images/WhatsApp Image 2026-01-20 at 8.06.16 PMt.jpeg',
-    'assets/images/WhatsApp Image 2026-01-20 at 8.06.16 PMw.jpeg',
-    'assets/images/WhatsApp Image 2026-01-20 at 8.06.17 PMg.jpeg',
-    'assets/images/WhatsApp Image 2026-01-20 at 8.06.17 PMz.jpeg',
-    'assets/images/WhatsApp Image 2026-01-20 at 8.06.18 PMb.jpeg',
-    'assets/images/WhatsApp Image 2026-01-20 at 8.06.18 PMy.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.33 PM5.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.33 PM6.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.33 PM7.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.34 PM8.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.34 PM9.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.35 PM10.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.36 PM11.jpeg',
+    'assets/images/WhatsApp Image 2026-05-18 at 2.00.36 PM12.jpeg',
   ];
 
   isGiftOpened = signal(false);
@@ -104,7 +112,7 @@ export class AppComponent implements AfterViewInit {
   initTypingEffect() {
     if (this.typingElement) {
       new Typed(this.typingElement.nativeElement, {
-        strings: ['Happy Birthday, Asmaa 🎉', 'My Love, My Life ❤️', 'Every day with you is a gift ✨'],
+        strings: ['Happy Birthday, Salma 🎉', 'My Love, My Life ❤️', 'Every day with you is a gift ✨'],
         typeSpeed: 50,
         backSpeed: 30,
         loop: true,
@@ -116,7 +124,7 @@ export class AppComponent implements AfterViewInit {
     if (this.finalMessageElement) {
       new Typed(this.finalMessageElement.nativeElement, {
         strings: [
-          'Dear Asmaa,^1000\n\nYou are the most incredible person I have ever known. Every day with you is a new adventure, a new reason to smile. You are my best friend, my soulmate, and my entire world.^1000\n\nOn your special day, I want you to know how much I love you. Always and forever.^2000\n\nHappy Birthday! ❤️'
+          'Dear Salma,^1000\n\nYou are the most incredible person I have ever known. Every day with you is a new adventure, a new reason to smile. You are my best friend, my soulmate, and my entire world.^1000\n\nOn your special day, I want you to know how much I love you. Always and forever.^2000\n\nHappy Birthday! ❤️'
         ],
         typeSpeed: 40,
         contentType: 'html',

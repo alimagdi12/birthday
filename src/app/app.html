@@ -87,17 +87,50 @@
   <!-- Step 4: Memory Map -->
   <section *ngIf="currentStep() === 4" class="map-section step-container">
     <h2 class="section-title">Where Our Love Grew</h2>
-    <div class="map-container">
-      <div class="custom-map">
-        <div *ngFor="let memory of memories" class="map-pin" [style.top]="memory.lat" [style.left]="memory.lng">
-          <div class="pin-head">📍</div>
-          <div class="pin-popup">
-            <img [src]="memory.img">
-            <p>{{ memory.title }}</p>
+    
+    <div class="map-layout-grid">
+      <!-- Column 1: The Interactive Memory Map -->
+      <div class="map-container">
+        <div class="custom-map">
+          <!-- Standard Memory Pins -->
+          <div *ngFor="let memory of memories" class="map-pin" [style.top]="memory.lat" [style.left]="memory.lng">
+            <div class="pin-head">📍</div>
+            <div class="pin-popup">
+              <img [src]="memory.img">
+              <p>{{ memory.title }}</p>
+            </div>
+          </div>
+          
+          <!-- Special Pulsing Favorite Spot Pin (Kicker's Café) -->
+          <div class="map-pin favorite-pin" [style.top]="favoriteSpot.lat" [style.left]="favoriteSpot.lng">
+            <div class="pin-head">💖</div>
+            <div class="pin-popup">
+              <img [src]="favoriteSpot.img" alt="Kicker's Cafe">
+              <p>Our Cozy Spot ☕</p>
+              <a [href]="favoriteSpot.mapLink" target="_blank" class="map-popup-link">Open Maps 🗺️</a>
+            </div>
           </div>
         </div>
       </div>
+      
+      <!-- Column 2: Dedicated Premium Cozy Corner Card -->
+      <div class="cozy-spot-card">
+        <div class="card-image-wrapper">
+          <img [src]="favoriteSpot.img" alt="Kicker's Cafe Cozy Corner">
+          <span class="card-badge">✨ Our Cozy Corner ✨</span>
+        </div>
+        <div class="card-body">
+          <div>
+            <h3>{{ favoriteSpot.title }}</h3>
+            <p>{{ favoriteSpot.description }}</p>
+          </div>
+          <a [href]="favoriteSpot.mapLink" target="_blank" class="maps-action-btn">
+            🗺️ Open in Google Maps
+          </a>
+        </div>
+      </div>
     </div>
+
     <div class="nav-btns">
       <button class="romantic-btn" (click)="prevStep()">Back</button>
       <button class="romantic-btn" (click)="nextStep()">Love Quiz 🎮</button>
